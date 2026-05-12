@@ -1,0 +1,35 @@
+.contenedor {
+  max-width: 900px;
+  margin: 30px auto;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin: 0;
+  color: #666;
+}
+
+.card p {
+  font-size: 28px;
+  margin: 10px 0 0;
+  font-weight: bold;
+}
+
+.card.pendiente p { color: #fbc02d; }
+.card.proceso p { color: #1976d2; }
+.card.finalizado p { color: #43a047; }

@@ -1,0 +1,17 @@
+<div class ="detalle">
+  <h1>Detalle de expediente</h1>
+
+  @if(expediente){
+    <div class = "card">
+      <p><strong>ID:</strong>{{expediente.id}}</p>
+      <p><strong>Nombre:</strong>{{expediente.nombre}}</p>
+      <p><strong>Estado:</strong>{{expediente.estado}}</p>
+      <p><strong>Prioridad:</strong>{{expediente.prioridad}}</p>
+      <p><strong>Fecha Creación:</strong>{{expediente.fechaCreacion}}</p>
+    </div>
+  }
+  @else {
+    <div class="mensaje-error"> No se encontró el expediente </div>
+  }
+
+</div>

@@ -1,0 +1,27 @@
+<div class="contenedor">
+  <h1>Reportes</h1>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>Total</h3>
+      <p>{{ totalExpedientes() }}</p>
+    </div>
+
+    <div class="card pendiente">
+      <h3>Pendientes</h3>
+      <p>{{ totalExpedientesPendientes() }}</p>
+    </div>
+
+    <div class="card proceso">
+      <h3>En proceso</h3>
+      <p>{{ totalExpedientesEnProceso() }}</p>
+    </div>
+
+    <div class="card finalizado">
+      <h3>Finalizados</h3>
+      <p>{{ totalExpedientesFinalizados() }}</p>
+    </div>
+
+  </div>
+</div>
