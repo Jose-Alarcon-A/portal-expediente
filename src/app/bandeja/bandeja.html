@@ -25,13 +25,7 @@
       </select>
 
       <button class="boton primary" (click)="agregarExpediente()">
-
-        @if(editandoId){
-          Guardar Cambios
-        } @else {
-          + Agregar Expediente
-        }
-
+        ➕ Agregar Expediente
       </button>
 
     </div>
@@ -52,9 +46,12 @@
 
       <tbody>
         @for (expediente of expedientes; track expediente.id) {
-          <tr>
+
+          <tr [class.fila-alta]="expediente.prioridad.toLowerCase() === 'alta'">
             <td>#{{ expediente.id }}</td>
-            <td class="nombre">{{ expediente.nombre }}</td>
+            <td class="nombre">
+              {{ expediente.nombre }}
+            </td>
             <td>
               <span class="estado {{ expediente.estado.toLowerCase().replace(' ', '-') }}">
                 {{ expediente.estado }}
@@ -68,23 +65,20 @@
             </td>
             <td class="acciones">
 
-              <button class="boton editar"
-                (click)="editarExpediente(expediente)">
-                Editar
+              <button class="boton editar" [routerLink]="['/expedientes/editar', expediente.id]">
+                ✏️
               </button>
 
-              <button class="boton danger"
-                (click)="eliminarExpediente(expediente.id)">
-                Eliminar
+              <button class="boton danger" (click)="eliminarExpediente(expediente.id)">
+                🗑️
               </button>
 
               <button class="boton detalle" [routerLink]="['/expedientes', expediente.id]">
-                  Ver Detalle
+                🔍
               </button>
 
-              <button class="boton estado"
-                (click)="cambiarEstado(expediente)">
-                Cambiar Estado
+              <button class="boton estado" (click)="cambiarEstado(expediente)">
+                🔄
               </button>
 
             </td>

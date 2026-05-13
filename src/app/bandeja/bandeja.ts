@@ -13,7 +13,6 @@ import { RouterLink } from '@angular/router';
 export class Bandeja implements OnInit{
   expedientes: Expediente[] = [];
 
-  editandoId: number | null = null;
 
   nuevoExpediente: Expediente = {
     id: 0,
@@ -56,42 +55,29 @@ export class Bandeja implements OnInit{
 
   agregarExpediente()
   {
-    if(!this.nuevoExpediente.nombre ||
+    if(
+      !this.nuevoExpediente.nombre ||
       !this.nuevoExpediente.estado ||
-      !this.nuevoExpediente.prioridad ||
-      !this.nuevoExpediente.fechaCreacion){
-        alert('Debe completar todos los datos');
-        return;
-      }
+      !this.nuevoExpediente.fechaCreacion ||
+      !this.nuevoExpediente.prioridad
+    ){
+      alert('Debe completar todos los datos');
+      return;
+    }
 
-      if(this.editandoId){
+    const expediente: Expediente = {
+      id: Date.now(),
+      nombre: this.nuevoExpediente.nombre,
+      estado: this.nuevoExpediente.estado,
+      fechaCreacion: this.nuevoExpediente.fechaCreacion,
+      prioridad: this.nuevoExpediente.prioridad
+    };
 
-        const index = this.expedientes.findIndex(
-          e => e.id === this.editandoId
-        );
+    this.expedientes.push(expediente);
 
-        this.expedientes[index] = {
-          ...this.nuevoExpediente
-        };
+    this.guardarLocalStorage();
 
-        this.editandoId = null;
-
-      }else{
-
-        const expediente: Expediente = {
-          id: Date.now(),
-          nombre: this.nuevoExpediente.nombre,
-          estado: this.nuevoExpediente.estado,
-          fechaCreacion: this.nuevoExpediente.fechaCreacion,
-          prioridad: this.nuevoExpediente.prioridad
-        };
-
-        this.expedientes.push(expediente);
-      }
-
-      //this.expedientes.push(expediente);
-      this.guardarLocalStorage();
-      this.limpiarFormulario();
+    this.limpiarFormulario();
   }
 
   eliminarExpediente(id: number)
@@ -99,12 +85,6 @@ export class Bandeja implements OnInit{
     if (confirm('¿Está seguro de que desea eliminar este expediente?'))
     this.expedientes = this.expedientes.filter(e => e.id !== id)
     this.guardarLocalStorage();
-  }
-
-  editarExpediente(expediente: Expediente)
-  {
-    this.nuevoExpediente = { ...expediente };
-    this.editandoId = expediente.id;
   }
 
   limpiarFormulario(){

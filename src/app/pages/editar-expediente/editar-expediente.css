@@ -1,0 +1,39 @@
+.contenedor {
+  max-width: 700px;
+  margin: 40px auto;
+}
+
+.card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.formulario-grid {
+  display: grid;
+  gap: 16px;
+}
+
+input,
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.input-error {
+  border: 2px solid #e53935;
+}
+
+.boton {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.primary {
+  background-color: #2563eb;
+  color: white;
+}

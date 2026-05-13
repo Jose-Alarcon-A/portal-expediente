@@ -1,0 +1,32 @@
+<div class="contenedor">
+
+  <h1>Editar Expediente</h1>
+
+  @if(expediente){
+    <div class="card formulario-grid">
+
+      <input type="text" placeholder="Nombre" [(ngModel)]="expediente.nombre" [class.input-error]="!expediente.nombre">
+
+      <select [(ngModel)]="expediente.estado" [class.input-error]="!expediente.estado">
+        <option value="">Seleccione estado</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="En proceso">En proceso</option>
+        <option value="Finalizado">Finalizado</option>
+      </select>
+
+      <input type="date" [(ngModel)]="expediente.fechaCreacion" [class.input-error]="!expediente.fechaCreacion">
+
+      <select [(ngModel)]="expediente.prioridad" [class.input-error]="!expediente.prioridad">
+        <option value="">Seleccione prioridad</option>
+        <option value="alta">Alta</option>
+        <option value="media">Media</option>
+        <option value="baja">Baja</option>
+      </select>
+
+      <button class="boton primary" (click)="guardarCambios()">
+        Guardar Cambios
+      </button>
+    </div>
+  }
+
+</div>
