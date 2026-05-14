@@ -1,5 +1,5 @@
-import { Expediente } from './../../../models/expediente';
 import { Component, OnInit } from '@angular/core';
+import { ExpedienteService } from '../../services/expediente';
 
 @Component({
   selector: 'app-reportes',
@@ -9,30 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Reportes implements OnInit {
 
-  expedientes: Expediente[] = [];
+  totalExpedientes = 0;
+  totalPendientes = 0;
+  totalEnProceso = 0;
+  totalFinalizados = 0;
+
+  constructor(private expedienteService: ExpedienteService) {}
 
   ngOnInit(): void {
-     const data = localStorage.getItem('expedientes');
+    this.totalExpedientes = this.expedienteService.contarTotal();
+    this.totalPendientes = this.expedienteService.contarPendientes();
+    this.totalEnProceso = this.expedienteService.contarEnProceso();
+    this.totalFinalizados = this.expedienteService.contarFinalizados();
 
-     if(data){
-      this.expedientes = JSON.parse(data);
-    }
   }
 
-  totalExpedientes()
-  {
-     return this.expedientes.length;
-  }
-  totalExpedientesPendientes()
-  {
-     return this.expedientes.filter(e => e.estado === 'Pendiente').length;
-  }
-  totalExpedientesEnProceso()
-  {
-     return this.expedientes.filter(e => e.estado === 'En proceso').length;
-  }
-  totalExpedientesFinalizados()
-  {
-     return this.expedientes.filter(e => e.estado === 'Finalizado').length;
-  }
 }

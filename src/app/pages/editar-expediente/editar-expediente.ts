@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Expediente } from '../../../models/expediente';
+import { ExpedienteService } from '../../services/expediente';
 
 @Component({
   selector: 'app-editar-expediente',
@@ -15,31 +16,25 @@ export class EditarExpediente implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private expedienteService: ExpedienteService
   ){}
 
   ngOnInit(): void {
 
-    const id = Number(
-      this.route.snapshot.paramMap.get('id')
-    );
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    const data = localStorage.getItem('expedientes');
+    const expedienteEncontrado = this.expedienteService.obtenerExpedientePorId(id);
 
-    if(data){
-
-      const expedientes: Expediente[] = JSON.parse(data);
-
-      const encontrado = expedientes.find(
-        e => e.id === id
-      );
-
-      if(encontrado){
-        this.expediente = encontrado;
-      }
-
+    if(expedienteEncontrado){
+      this.expediente = expedienteEncontrado;
     }
-
+    else
+    {
+      //this.mensajeError = 'Expediente no encontrado';
+      alert('Expediente no encontrado');
+      //this.router.navigate(['/bandeja']);
+    }
   }
 
   guardarCambios()
@@ -55,30 +50,8 @@ export class EditarExpediente implements OnInit {
       return;
     }
 
-    if(confirm('¿Está seguro de guardar los cambios?')){
-
-      const data = localStorage.getItem('expedientes');
-
-      if(data){
-
-        const expedientes: Expediente[] = JSON.parse(data);
-
-        const index = expedientes.findIndex(
-          e => e.id === this.expediente.id
-        );
-
-        expedientes[index] = this.expediente;
-
-        localStorage.setItem(
-          'expedientes',
-          JSON.stringify(expedientes)
-        );
-
-        this.router.navigate(['/bandeja']);
-      }
-
-    }
-
+    this.expedienteService.actualizarExpediente(this.expediente);
+    this.router.navigate(['/bandeja']);
   }
 
 }

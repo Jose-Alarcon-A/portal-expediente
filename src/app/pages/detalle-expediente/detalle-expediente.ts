@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Expediente } from '../../../models/expediente';
+import { ExpedienteService } from '../../services/expediente';
 
 @Component({
   selector: 'app-detalle-expediente',
@@ -12,23 +13,14 @@ export class DetalleExpediente implements OnInit {
   idExpediente = 0;
   expediente: Expediente | undefined;
 
-  constructor(private route: ActivatedRoute)
-  {
-
-  }
+  constructor(private route: ActivatedRoute, private expedienteService: ExpedienteService) {}
 
   ngOnInit(): void {
     this.idExpediente = Number(
       this.route.snapshot.paramMap.get('id')
     );
 
-    const data = localStorage.getItem('expedientes');
-
-    if(data){
-      const expedientes: Expediente[] = JSON.parse(data);
-
-      this.expediente = expedientes.find(e => e.id === this.idExpediente);
-    }
+    this.expediente = this.expedienteService.obtenerExpedientePorId(this.idExpediente);
 
   }
 
