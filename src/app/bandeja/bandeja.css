@@ -211,3 +211,60 @@ tr:hover {
 .boton.detalle:hover {
   background-color: #0284c7;
 }
+/* Observaciones */
+.observaciones-container {
+  grid-column: span 2;
+}
+
+.observaciones-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.observaciones-box input {
+  flex: 1;
+}
+
+.lista-observaciones {
+  margin-top: 12px;
+
+  padding: 12px;
+
+  background-color: #f8fafc;
+
+  border-radius: 10px;
+
+  border: 1px solid #e2e8f0;
+
+  list-style: none;
+}
+
+.lista-observaciones li {
+  padding: 6px 0;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  font-size: 14px;
+
+  color: #374151;
+}
+
+.lista-observaciones li:last-child {
+  border-bottom: none;
+}
+
+.observaciones {
+  min-width: 180px;
+
+  text-align: left;
+
+  font-size: 13px;
+}
+
+.observaciones div {
+  margin-bottom: 5px;
+}
+.observaciones-box .boton {
+  min-width: 140px;
+}

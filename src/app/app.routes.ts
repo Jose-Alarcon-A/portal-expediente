@@ -5,6 +5,8 @@ import { Acerca } from './pages/acerca/acerca';
 import { Reportes } from './pages/reportes/reportes';
 import { DetalleExpediente } from './pages/detalle-expediente/detalle-expediente';
 import { EditarExpediente } from './pages/editar-expediente/editar-expediente';
+import { EstadoExpedientes } from './pages/estado-expedientes/estado-expedientes';
+
 
 export const routes: Routes = [
   {
@@ -18,6 +20,10 @@ export const routes: Routes = [
   {
     path: 'reportes',
     component: Reportes
+  },
+  {
+    path: 'expedientes/estado/:estado',
+    component: EstadoExpedientes
   },
   {
     path: 'acerca',

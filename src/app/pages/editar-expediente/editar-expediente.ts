@@ -13,6 +13,7 @@ import { ExpedienteService } from '../../services/expediente';
 export class EditarExpediente implements OnInit {
 
   expediente!: Expediente;
+  nuevaObservacion = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +27,11 @@ export class EditarExpediente implements OnInit {
 
     const expedienteEncontrado = this.expedienteService.obtenerExpedientePorId(id);
 
-    if(expedienteEncontrado){
+    if(expedienteEncontrado)
+    {
+     if(!Array.isArray(expedienteEncontrado.observaciones)){
+        expedienteEncontrado.observaciones = [];
+      }
       this.expediente = expedienteEncontrado;
     }
     else
@@ -49,9 +54,25 @@ export class EditarExpediente implements OnInit {
       alert('Debe completar todos los campos');
       return;
     }
-
-    this.expedienteService.actualizarExpediente(this.expediente);
-    this.router.navigate(['/bandeja']);
+    if(confirm('¿Está seguro de guardar los cambios?'))
+    {
+      this.expedienteService.actualizarExpediente(
+        this.expediente
+      );
+      this.router.navigate(['/bandeja']);
+    }
   }
+  agregarObservacion()
+  {
+    this.expedienteService.agregarObservacion(
+      this.expediente,
+      this.nuevaObservacion
+    );
 
+    this.nuevaObservacion = '';
+  }
+  eliminarObservacion(index: number)
+  {
+    this.expediente.observaciones.splice(index, 1);
+  }
 }

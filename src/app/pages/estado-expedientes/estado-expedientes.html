@@ -1,0 +1,47 @@
+<div class="contenedor">
+
+  <h1>
+    Expedientes {{ estado }}
+  </h1>
+
+  <div class="card tabla-wrapper">
+
+    <table class="tabla">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th>Prioridad</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for(expediente of expedientes;
+          track expediente.id){
+
+          <tr [class.fila-alta]=" expediente.prioridad.toLowerCase() === 'alta'">
+
+            <td>#{{ expediente.id }}</td>
+            <td>{{ expediente.nombre }}</td>
+            <td>
+              <span class="estado">
+                {{ expediente.estado }}
+              </span>
+            </td>
+            <td>
+              <span class="prioridad">
+                {{ expediente.prioridad }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

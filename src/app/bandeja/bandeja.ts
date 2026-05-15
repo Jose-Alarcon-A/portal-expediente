@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 })
 export class Bandeja implements OnInit{
   expedientes: Expediente[] = [];
+  nuevaObservacion = '';
 
   nuevoExpediente: Expediente = {
     id: 0,
@@ -21,6 +22,7 @@ export class Bandeja implements OnInit{
     estado: '',
     fechaCreacion: '',
     prioridad: '',
+    observaciones: []
   }
 
   constructor(private ExpedienteService: ExpedienteService) {}
@@ -29,8 +31,14 @@ export class Bandeja implements OnInit{
     this.cargarExpedientes();
   }
 
-  cargarExpedientes() {
+  cargarExpedientes()
+  {
     this.expedientes = this.ExpedienteService.obtenerExpedientes();
+    this.expedientes.forEach(expediente => {
+      if(!Array.isArray(expediente.observaciones)){
+        expediente.observaciones = [];
+      }
+    });
   }
 
   agregarExpediente()
@@ -50,13 +58,20 @@ export class Bandeja implements OnInit{
       nombre: this.nuevoExpediente.nombre,
       estado: this.nuevoExpediente.estado,
       fechaCreacion: this.nuevoExpediente.fechaCreacion,
-      prioridad: this.nuevoExpediente.prioridad
+      prioridad: this.nuevoExpediente.prioridad,
+      observaciones: this.nuevoExpediente.observaciones
     };
 
     this.ExpedienteService.agregarExpediente(expediente);
     this.cargarExpedientes();
 
     this.limpiarFormulario();
+  }
+
+  agregarObservacion()
+  {
+    this.ExpedienteService.agregarObservacion(this.nuevoExpediente, this.nuevaObservacion);
+    this.nuevaObservacion = '';
   }
 
   eliminarExpediente(id: number)
@@ -71,7 +86,8 @@ export class Bandeja implements OnInit{
       nombre: '',
       estado: '',
       fechaCreacion: '',
-      prioridad: ''
+      prioridad: '',
+      observaciones: []
     }
   };
 

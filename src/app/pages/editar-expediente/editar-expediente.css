@@ -37,3 +37,53 @@ select {
   background-color: #2563eb;
   color: white;
 }
+/*observaciones*/
+.observaciones-container {
+  grid-column: span 2;
+}
+
+.observaciones-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.observaciones-box input {
+  flex: 1;
+}
+
+.lista-observaciones {
+  margin-top: 12px;
+
+  padding: 12px;
+
+  background-color: #f8fafc;
+
+  border-radius: 10px;
+
+  border: 1px solid #e2e8f0;
+
+  list-style: none;
+}
+
+.lista-observaciones li {
+  display: flex;
+
+  gap: 10px;
+
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+.lista-observaciones input {
+  flex: 1;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  padding: 8px;
+}
+.lista-observaciones li:last-child {
+  border-bottom: none;
+}

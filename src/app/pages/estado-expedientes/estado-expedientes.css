@@ -1,0 +1,106 @@
+.contenedor {
+  max-width: 1100px;
+
+  margin: 40px auto;
+
+  padding: 20px;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  text-align: center;
+
+  margin-bottom: 30px;
+
+  font-size: 36px;
+
+  color: #1e293b;
+}
+
+.card {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.tabla-wrapper {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.tabla thead {
+  background-color: #f1f5f9;
+}
+
+.tabla th {
+  padding: 16px;
+
+  text-align: left;
+
+  font-size: 15px;
+
+  color: #334155;
+}
+
+.tabla td {
+  padding: 14px 16px;
+
+  border-top: 1px solid #e2e8f0;
+
+  color: #475569;
+}
+
+.tabla tbody tr {
+  transition: all 0.2s ease;
+}
+
+.tabla tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.fila-alta {
+  background-color: #fef2f2;
+
+  border-left: 5px solid #ef4444;
+}
+
+.estado,
+.prioridad {
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+  display: inline-block;
+}
+
+.estado {
+  background-color: #dbeafe;
+
+  color: #1d4ed8;
+}
+
+.prioridad {
+  background-color: #fef3c7;
+
+  color: #92400e;
+}
+
+.fila-alta .prioridad {
+  background-color: #fee2e2;
+
+  color: #dc2626;
+}

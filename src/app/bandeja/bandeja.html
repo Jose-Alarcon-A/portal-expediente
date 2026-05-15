@@ -24,12 +24,33 @@
         <option value="alta">Alta</option>
       </select>
 
+      <div class="observaciones-box">
+        <input type="text" placeholder="Agregar observación" [(ngModel)]="nuevaObservacion">
+
+        <button type="button" class="boton detalle" (click)="agregarObservacion()">
+          ➕ Observación
+        </button>
+      </div>
+
       <button class="boton primary" (click)="agregarExpediente()">
         ➕ Agregar Expediente
       </button>
 
     </div>
   </div>
+
+  <ul class="lista-observaciones">
+
+    @for(observacion of nuevoExpediente.observaciones;
+      track observacion){
+
+      <li>
+        📝 {{ observacion }}
+      </li>
+
+    }
+
+  </ul>
 
   <div class="card tabla-wrapper">
     <table class="tabla">
@@ -40,6 +61,7 @@
           <th>Estado</th>
           <th>Fecha</th>
           <th>Prioridad</th>
+          <th>Observaciones</th>
           <th>Acción</th>
         </tr>
       </thead>
@@ -62,6 +84,14 @@
               <span class="prioridad {{ expediente.prioridad.toLowerCase() }}">
                 {{ expediente.prioridad }}
               </span>
+            </td>
+            <td class="observaciones">
+              @for(observacion of expediente.observaciones;
+                track observacion){
+                <div>
+                  📝 {{ observacion }}
+                </div>
+              }
             </td>
             <td class="acciones">
 

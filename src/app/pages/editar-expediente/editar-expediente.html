@@ -23,10 +23,36 @@
         <option value="baja">Baja</option>
       </select>
 
+      <div class="observaciones-container">
+        <div class="observaciones-box">
+          <input type="text" placeholder="Nueva observación" [(ngModel)]="nuevaObservacion">
+
+          <button type="button" class="boton detalle" (click)="agregarObservacion()">
+            ➕ Observación
+          </button>
+        </div>
+
+        <ul class="lista-observaciones">
+          @for(observacion of expediente.observaciones;
+            track observacion){
+            <li>
+              <input
+                type="text"
+                [(ngModel)]="expediente.observaciones[$index]">
+              <button type="button" class="boton danger mini" (click)="eliminarObservacion($index)">
+                ❌
+              </button>
+            </li>
+          }
+        </ul>
+      </div>
+
       <button class="boton primary" (click)="guardarCambios()">
         Guardar Cambios
       </button>
+
     </div>
   }
 
 </div>
+

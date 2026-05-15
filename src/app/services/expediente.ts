@@ -25,21 +25,24 @@ export class ExpedienteService
       nombre: 'Fiscalización',
       estado: 'Pendiente',
       fechaCreacion: '02/05/2026',
-      prioridad: 'Alta'
+      prioridad: 'Alta',
+      observaciones: ['Requiere atención urgente']
     },
     {
       id: 2,
       nombre: 'Revisión',
       estado: 'Pendiente',
       fechaCreacion: '04/05/2026',
-      prioridad: 'Media'
+      prioridad: 'Media',
+      observaciones: ['Requiere revisión detallada']
     },
     {
       id: 3,
       nombre: 'Canon',
       estado: 'Pendiente',
       fechaCreacion: '07/05/2026',
-      prioridad: 'Baja'
+      prioridad: 'Baja',
+      observaciones: ['Requiere seguimiento periódico']
     }];
 
     this.guardarExpedientes(expeditesIniciales);
@@ -72,22 +75,36 @@ export class ExpedienteService
 
     this.guardarExpedientes(expedientesActualizados);
   }
+  agregarObservacion(expediente: Expediente, observacion: string): void
+  {
+    if(!observacion.trim()){
+      return;
+    }
+    expediente.observaciones.push(observacion);
+  }
 
   contarTotal(): number {
     return this.obtenerExpedientes().length;
   }
   contarPendientes(): number {
-    return this.obtenerExpedientes().filter(exp => exp.estado === 'Pendiente').length;
+    return this.obtenerExpedientes().filter(exp => exp.estado.toLocaleLowerCase() === 'pendiente').length;
   }
   contarEnProceso(): number {
-    return this.obtenerExpedientes().filter(exp => exp.estado === 'En Proceso').length;
+    return this.obtenerExpedientes().filter(exp => exp.estado.toLowerCase() === 'en proceso').length;
   }
   contarFinalizados(): number {
-    return this.obtenerExpedientes().filter(exp => exp.estado === 'Finalizado').length;
+    return this.obtenerExpedientes().filter(exp => exp.estado.toLocaleLowerCase() === 'finalizado').length;
   }
 
   guardarExpedientes(expedientes: Expediente[]): void {
     localStorage.setItem(this.storagekey, JSON.stringify(expedientes));
+  }
+
+  obtenerExpedientesPorEstado(estado: string): Expediente[]
+  {
+    return this.obtenerExpedientes()
+      .filter(exp => exp.estado.toLowerCase() === estado.toLowerCase()
+    );
   }
 
 }

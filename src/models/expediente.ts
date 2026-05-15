@@ -4,4 +4,5 @@ export interface Expediente {
   estado: string;
   fechaCreacion: string;
   prioridad: string;
+  observaciones: string[];
 }

@@ -8,6 +8,23 @@
       <p><strong>Estado:</strong>{{expediente.estado}}</p>
       <p><strong>Prioridad:</strong>{{expediente.prioridad}}</p>
       <p><strong>Fecha Creación:</strong>{{expediente.fechaCreacion}}</p>
+
+      <div class="detalle-observaciones">
+        <strong>Observaciones:</strong>
+        @if(expediente.observaciones.length > 0){
+          <ul>
+            @for(observacion of expediente.observaciones;
+              track observacion){
+              <li>
+                📝 {{ observacion }}
+              </li>
+            }
+          </ul>
+        } @else
+        {
+          <p>Sin observaciones</p>
+        }
+      </div>
     </div>
   }
   @else {
