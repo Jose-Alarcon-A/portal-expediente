@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-bandeja',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, DatePipe],
   templateUrl: './bandeja.html',
   styleUrl: './bandeja.css',
 })
@@ -16,13 +16,17 @@ export class Bandeja implements OnInit{
   expedientes: Expediente[] = [];
   nuevaObservacion = '';
 
+  filtroEstado = '';
+  filtroPrioridad = '';
+
   nuevoExpediente: Expediente = {
     id: 0,
     nombre: '',
     estado: '',
     fechaCreacion: '',
     prioridad: '',
-    observaciones: []
+    observaciones: [],
+    historial: []
   }
 
   constructor(private ExpedienteService: ExpedienteService) {}
@@ -59,7 +63,8 @@ export class Bandeja implements OnInit{
       estado: this.nuevoExpediente.estado,
       fechaCreacion: this.nuevoExpediente.fechaCreacion,
       prioridad: this.nuevoExpediente.prioridad,
-      observaciones: this.nuevoExpediente.observaciones
+      observaciones: this.nuevoExpediente.observaciones,
+      historial: this.nuevoExpediente.historial
     };
 
     this.ExpedienteService.agregarExpediente(expediente);
@@ -87,7 +92,8 @@ export class Bandeja implements OnInit{
       estado: '',
       fechaCreacion: '',
       prioridad: '',
-      observaciones: []
+      observaciones: [],
+      historial: []
     }
   };
 
@@ -106,8 +112,23 @@ export class Bandeja implements OnInit{
       expediente.estado = 'Pendiente';
     }*/
 
+    this.ExpedienteService.agregarHistorial(expediente, `El expediente "${expediente.nombre}" cambió al estado "${expediente.estado}" el ${new Date().toLocaleString()}`);
+
     this.ExpedienteService.guardarExpedientes(this.expedientes);
     this.cargarExpedientes();
-  }
 
+  }
+  obtenerExpedientesFiltrados()
+  {
+    return this.expedientes.filter(expediente => {
+      const cumpleEstado = !this.filtroEstado || expediente.estado === this.filtroEstado;
+      const cumplePrioridad = !this.filtroPrioridad || expediente.prioridad === this.filtroPrioridad;
+      return cumpleEstado && cumplePrioridad;
+    });
+  }
+  limpiarFiltros()
+  {
+    this.filtroEstado = '';
+    this.filtroPrioridad = '';
+  }
 }

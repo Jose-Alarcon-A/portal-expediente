@@ -5,4 +5,5 @@ export interface Expediente {
   fechaCreacion: string;
   prioridad: string;
   observaciones: string[];
+  historial: string[];
 }

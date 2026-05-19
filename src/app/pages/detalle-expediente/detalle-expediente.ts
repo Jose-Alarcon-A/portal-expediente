@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Expediente } from '../../../models/expediente';
 import { ExpedienteService } from '../../services/expediente';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-expediente',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './detalle-expediente.html',
   styleUrl: './detalle-expediente.css',
 })

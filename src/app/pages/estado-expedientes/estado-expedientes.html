@@ -13,14 +13,14 @@
           <th>ID</th>
           <th>Nombre</th>
           <th>Estado</th>
+          <TH>Fecha de Creación</TH>
           <th>Prioridad</th>
         </tr>
       </thead>
 
       <tbody>
 
-        @for(expediente of expedientes;
-          track expediente.id){
+        @for(expediente of expedientes; track expediente.id){
 
           <tr [class.fila-alta]=" expediente.prioridad.toLowerCase() === 'alta'">
 
@@ -31,6 +31,7 @@
                 {{ expediente.estado }}
               </span>
             </td>
+            <td> {{expediente.fechaCreacion | date:'dd-MM-yyyy'}} </td>
             <td>
               <span class="prioridad">
                 {{ expediente.prioridad }}

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Expediente } from '../../../models/expediente';
 import { ExpedienteService } from '../../services/expediente';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-estado-expedientes',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './estado-expedientes.html',
   styleUrl: './estado-expedientes.css',
 })

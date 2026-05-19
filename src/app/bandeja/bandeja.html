@@ -48,69 +48,110 @@
     </div>
   </div>
 
-  <div class="card tabla-wrapper">
-    <table class="tabla">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Estado</th>
-          <th>Fecha</th>
-          <th>Prioridad</th>
-          <th>Observaciones</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
+  <div>
+    <h2>Filtros</h2>
+    <div class="formulario-grid">
+      <select [(ngModel)]="filtroEstado">
+        <option value="">Seleccione un estado</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="En proceso">En proceso</option>
+        <option value="Finalizado">Finalizado</option>
+      </select>
 
-      <tbody>
-        @for (expediente of expedientes; track expediente.id) {
+      <select [(ngModel)]="filtroPrioridad">
+        <option value="">Seleccione una prioridad</option>
+        <option value="baja">Baja</option>
+        <option value="media">Media</option>
+        <option value="alta">Alta</option>
+      </select>
 
-          <tr [class.fila-alta]="expediente.prioridad.toLowerCase() === 'alta'">
-            <td>#{{ expediente.id }}</td>
-            <td class="nombre">
-              {{ expediente.nombre }}
-            </td>
-            <td>
-              <span class="estado {{ expediente.estado.toLowerCase().replace(' ', '-') }}">
-                {{ expediente.estado }}
-              </span>
-            </td>
-            <td>{{ expediente.fechaCreacion }}</td>
-            <td>
-              <span class="prioridad {{ expediente.prioridad.toLowerCase() }}">
-                {{ expediente.prioridad }}
-              </span>
-            </td>
-            <td class="observaciones">
-              @for(observacion of expediente.observaciones;
-                track observacion){
-                <div>
-                  📝 {{ observacion }}
-                </div>
-              }
-            </td>
-            <td class="acciones">
+      <button class="boton primary" (click)="limpiarFiltros()">
+        🧹 Limpiar Filtros
+      </button>
 
-              <button class="boton editar" [routerLink]="['/expedientes/editar', expediente.id]">
-                ✏️
-              </button>
+      <p> Resultados: {{ obtenerExpedientesFiltrados().length }}</p>
 
-              <button class="boton danger" (click)="eliminarExpediente(expediente.id)">
-                🗑️
-              </button>
-
-              <button class="boton detalle" [routerLink]="['/expedientes', expediente.id]">
-                🔍
-              </button>
-
-              <button class="boton estado" (click)="cambiarEstado(expediente)">
-                🔄
-              </button>
-
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+    </div>
   </div>
+
+  @if(expedientes.length === 0) {
+    <div class="mensaje-vacio">
+      📂 No hay expedientes registrados.
+    </div>
+  } @else if(obtenerExpedientesFiltrados().length === 0) {
+    <div class="mensaje-vacio">
+      🔍 No existen expedientes que coincidan con los filtros aplicados.
+    </div>
+  } @else {
+
+    <div class="card tabla-wrapper">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Prioridad</th>
+            <th>Observaciones</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (expediente of obtenerExpedientesFiltrados(); track expediente.id) {
+
+            <tr [class.fila-alta]="expediente.prioridad.toLowerCase() === 'alta'">
+              <td>#{{ expediente.id }}</td>
+              <td class="nombre">
+                {{ expediente.nombre }}
+              </td>
+              <td>
+                <span class="estado {{ expediente.estado.toLowerCase().replace(' ', '-') }}">
+                  {{ expediente.estado }}
+                </span>
+              </td>
+              <td>{{ expediente.fechaCreacion | date:'dd-MM-yyyy' }}</td>
+              <td>
+                <span class="prioridad {{ expediente.prioridad.toLowerCase() }}">
+                  {{ expediente.prioridad }}
+                </span>
+              </td>
+              <td class="observaciones">
+                @if (expediente.observaciones.length > 0)
+                {
+                  @for(observacion of expediente.observaciones; track observacion){
+                    <div>
+                      📝 {{ observacion }}
+                    </div>
+                  }
+                } @else {
+                  <span class="sin-observaciones">Sin observaciones</span>
+                }
+              </td>
+              <td class="acciones">
+
+                <button class="boton editar" [routerLink]="['/expedientes/editar', expediente.id]">
+                  ✏️
+                </button>
+
+                <button class="boton danger" (click)="eliminarExpediente(expediente.id)">
+                  🗑️
+                </button>
+
+                <button class="boton detalle" [routerLink]="['/expedientes', expediente.id]">
+                  🔍
+                </button>
+
+                <button class="boton estado" (click)="cambiarEstado(expediente)">
+                  🔄
+                </button>
+
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </div>

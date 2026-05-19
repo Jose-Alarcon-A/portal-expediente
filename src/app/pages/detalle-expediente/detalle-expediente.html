@@ -2,12 +2,13 @@
   <h1>Detalle de expediente</h1>
 
   @if(expediente){
+
     <div class = "card">
       <p><strong>ID:</strong>{{expediente.id}}</p>
       <p><strong>Nombre:</strong>{{expediente.nombre}}</p>
       <p><strong>Estado:</strong>{{expediente.estado}}</p>
       <p><strong>Prioridad:</strong>{{expediente.prioridad}}</p>
-      <p><strong>Fecha Creación:</strong>{{expediente.fechaCreacion}}</p>
+      <p><strong>Fecha Creación:</strong>{{expediente.fechaCreacion | date:'dd-MM-yyyy'}}</p>
 
       <div class="detalle-observaciones">
         <strong>Observaciones:</strong>
@@ -25,6 +26,24 @@
           <p>Sin observaciones</p>
         }
       </div>
+
+      <div class="detalle-historial">
+        <strong>Historial de cambios:</strong>
+        @if(expediente.historial.length > 0){
+          <ul>
+            @for(historial of expediente.historial;
+              track historial){
+              <li>
+                📜 {{ historial }}
+              </li>
+            }
+          </ul>
+        } @else
+        {
+          <p>Sin historial de cambios</p>
+        }
+      </div>
+
     </div>
   }
   @else {

@@ -26,7 +26,8 @@ export class ExpedienteService
       estado: 'Pendiente',
       fechaCreacion: '02/05/2026',
       prioridad: 'Alta',
-      observaciones: ['Requiere atención urgente']
+      observaciones: ['Requiere atención urgente'],
+      historial:[]
     },
     {
       id: 2,
@@ -34,7 +35,8 @@ export class ExpedienteService
       estado: 'Pendiente',
       fechaCreacion: '04/05/2026',
       prioridad: 'Media',
-      observaciones: ['Requiere revisión detallada']
+      observaciones: ['Requiere revisión detallada'],
+      historial:[]
     },
     {
       id: 3,
@@ -42,7 +44,8 @@ export class ExpedienteService
       estado: 'Pendiente',
       fechaCreacion: '07/05/2026',
       prioridad: 'Baja',
-      observaciones: ['Requiere seguimiento periódico']
+      observaciones: ['Requiere seguimiento periódico'],
+      historial:[]
     }];
 
     this.guardarExpedientes(expeditesIniciales);
@@ -105,6 +108,14 @@ export class ExpedienteService
     return this.obtenerExpedientes()
       .filter(exp => exp.estado.toLowerCase() === estado.toLowerCase()
     );
+  }
+
+  agregarHistorial(expediente: Expediente, historial: string): void
+  {
+    if(!historial.trim()){
+      return;
+    }
+    expediente.historial.push(historial);
   }
 
 }
