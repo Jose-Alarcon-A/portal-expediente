@@ -14,6 +14,7 @@ export class EditarExpediente implements OnInit {
 
   expediente!: Expediente;
   nuevaObservacion = '';
+  estadoOriginal = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +34,7 @@ export class EditarExpediente implements OnInit {
         expedienteEncontrado.observaciones = [];
       }
       this.expediente = expedienteEncontrado;
+      this.estadoOriginal = expedienteEncontrado.estado;
     }
     else
     {
@@ -54,6 +56,21 @@ export class EditarExpediente implements OnInit {
       alert('Debe completar todos los campos');
       return;
     }
+
+    const fechaCreacion = new Date(this.expediente.fechaCreacion);
+    const fechaVencimiento = new Date(this.expediente.fechaVencimiento);
+
+    if(fechaVencimiento < fechaCreacion){
+      alert(
+        'La fecha de vencimiento no puede ser anterior a la fecha de creación'
+      );
+      return;
+    }
+
+    if(this.estadoOriginal !== this.expediente.estado){
+      this.expedienteService.agregarHistorial(this.expediente, `El expediente "${this.expediente.nombre}" cambió al estado "${this.expediente.estado}" el ${new Date().toLocaleString()}`);
+    }
+
     if(confirm('¿Está seguro de guardar los cambios?'))
     {
       this.expedienteService.actualizarExpediente(

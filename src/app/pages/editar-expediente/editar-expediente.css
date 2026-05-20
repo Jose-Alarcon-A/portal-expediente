@@ -87,3 +87,209 @@ select {
 .lista-observaciones li:last-child {
   border-bottom: none;
 }
+.contenedor {
+
+  max-width: 950px;
+
+  margin: 30px auto;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+
+  background: white;
+
+  padding: 25px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.formulario-grid {
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+}
+
+/* Campos */
+
+.campo-formulario {
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+.campo-formulario label {
+
+  margin-bottom: 6px;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+  color: #475569;
+}
+
+/* Inputs */
+
+input,
+select {
+
+  width: 100%;
+
+  padding: 10px 12px;
+
+  border-radius: 10px;
+
+  border: 1px solid #d1d5db;
+
+  font-size: 14px;
+
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+
+/* Error */
+
+.input-error {
+
+  border-color: #dc2626;
+}
+
+/* Observaciones */
+
+.observaciones-container {
+
+  grid-column: span 2;
+}
+
+.observaciones-container label {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+  color: #475569;
+}
+
+.observaciones-box {
+
+  display: flex;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+.observaciones-box input {
+
+  flex: 1;
+}
+
+/* Lista */
+
+.lista-observaciones {
+
+  list-style: none;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+}
+
+.lista-observaciones li {
+
+  display: flex;
+
+  gap: 10px;
+
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.lista-observaciones li:last-child {
+
+  margin-bottom: 0;
+}
+
+/* Botones */
+
+.boton {
+
+  border: none;
+
+  border-radius: 10px;
+
+  padding: 10px 14px;
+
+  cursor: pointer;
+
+  color: white;
+
+  transition: 0.2s;
+}
+
+.primary {
+
+  grid-column: span 2;
+
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+
+  font-weight: bold;
+}
+
+.primary:hover {
+
+  transform: translateY(-1px);
+}
+
+.boton.detalle {
+
+  background: #0ea5e9;
+}
+
+.boton.detalle:hover {
+
+  background: #0284c7;
+}
+
+.boton.danger {
+
+  background: #dc2626;
+}
+
+.boton.danger:hover {
+
+  background: #b91c1c;
+}
+
+.boton.mini {
+
+  padding: 8px 10px;
+}

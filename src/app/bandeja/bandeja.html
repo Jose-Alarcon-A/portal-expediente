@@ -5,31 +5,56 @@
   <div class="card">
     <div class="formulario-grid">
 
-      <input type="text" placeholder="Nombre del expediente"
-        [(ngModel)]="nuevoExpediente.nombre">
+      <div class="campo-formulario">
+        <label>📁 Nombre del expediente</label>
+        <input type="text" placeholder="Ingrese nombre del expediente"
+          [(ngModel)]="nuevoExpediente.nombre">
+      </div>
 
-      <select [(ngModel)]="nuevoExpediente.estado">
-        <option value="">Seleccione un estado</option>
-        <option value="Pendiente">Pendiente</option>
-        <option value="En proceso">En proceso</option>
-        <option value="Finalizado">Finalizado</option>
-      </select>
+      <div class="campo-formulario">
 
-      <input type="date" [(ngModel)]="nuevoExpediente.fechaCreacion">
+        <label>📌 Estado</label>
+        <select [(ngModel)]="nuevoExpediente.estado">
+          <option value="">Seleccione un estado</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="En proceso">En proceso</option>
+          <option value="Finalizado">Finalizado</option>
+        </select>
+      </div>
 
-      <select [(ngModel)]="nuevoExpediente.prioridad">
-        <option value="">Seleccione prioridad</option>
-        <option value="baja">Baja</option>
-        <option value="media">Media</option>
-        <option value="alta">Alta</option>
-      </select>
+      <div class="campo-formulario">
+        <label>📅 Fecha creación</label>
 
-      <div class="observaciones-box">
-        <input type="text" placeholder="Agregar observación" [(ngModel)]="nuevaObservacion">
+        <input type="date" [(ngModel)]="nuevoExpediente.fechaCreacion">
+      </div>
 
-        <button type="button" class="boton detalle" (click)="agregarObservacion()">
-          ➕ Observación
-        </button>
+      <div class="campo-formulario">
+        <label>⏰ Fecha vencimiento</label>
+
+        <input type="date" [(ngModel)]="nuevoExpediente.fechaVencimiento" [min]="nuevoExpediente.fechaCreacion">
+      </div>
+
+      <div class="campo-formulario">
+
+        <label>🚨 Prioridad</label>
+        <select [(ngModel)]="nuevoExpediente.prioridad">
+          <option value="">Seleccione prioridad</option>
+          <option value="baja">Baja</option>
+          <option value="media">Media</option>
+          <option value="alta">Alta</option>
+        </select>
+      </div>
+
+      <div class="campo-formulario observaciones-container">
+
+        <label>📝 Observaciones</label>
+        <div class="observaciones-box">
+          <input type="text" placeholder="Agregar observación" [(ngModel)]="nuevaObservacion">
+
+          <button type="button" class="boton detalle" (click)="agregarObservacion()">
+            ➕ Observación
+          </button>
+        </div>
       </div>
 
       <ul class="lista-observaciones">
@@ -48,7 +73,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="filtros-box">
     <h2>Filtros</h2>
     <div class="formulario-grid">
       <select [(ngModel)]="filtroEstado">
@@ -92,6 +117,7 @@
             <th>Nombre</th>
             <th>Estado</th>
             <th>Fecha</th>
+            <th>Vencimiento</th>
             <th>Prioridad</th>
             <th>Observaciones</th>
             <th>Acción</th>
@@ -101,7 +127,8 @@
         <tbody>
           @for (expediente of obtenerExpedientesFiltrados(); track expediente.id) {
 
-            <tr [class.fila-alta]="expediente.prioridad.toLowerCase() === 'alta'">
+            <tr [ngClass]="[expediente.prioridad.toLowerCase() === 'alta' ? 'fila-alta' : '',
+                estadoVencimiento(expediente.fechaVencimiento)]">
               <td>#{{ expediente.id }}</td>
               <td class="nombre">
                 {{ expediente.nombre }}
@@ -112,6 +139,7 @@
                 </span>
               </td>
               <td>{{ expediente.fechaCreacion | date:'dd-MM-yyyy' }}</td>
+              <td>{{ expediente.fechaVencimiento | date:'dd-MM-yyyy' }}</td>
               <td>
                 <span class="prioridad {{ expediente.prioridad.toLowerCase() }}">
                   {{ expediente.prioridad }}

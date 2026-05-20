@@ -1,0 +1,71 @@
+<div class="contenedor">
+  <h1>⏰ Calendario de Vencimientos</h1>
+
+  @if (expedientes.length === 0) {
+    <div class="mensaje-vacio">
+      ✅ No hay expedientes próximos a vencer en los próximos 7 días.
+    </div>
+  } @else {
+    <div class="card tabla-wrapper">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Vencimiento</th>
+            <th>Prioridad</th>
+            <th>Días restantes</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (exp of expedientes; track exp.id) {
+            <tr
+              [ngClass]="[estadoVencimiento(exp.fechaVencimiento),
+                exp.prioridad.toLowerCase() === 'alta'? 'fila-alta': '']">
+
+              <td>#{{ exp.id }}</td>
+
+              <td class="nombre">
+                {{ exp.nombre }}
+              </td>
+
+              <td>
+                <span
+                  class="estado {{
+                    exp.estado.toLowerCase().replace(' ', '-')
+                  }}">
+
+                  {{ exp.estado }}
+
+                </span>
+              </td>
+
+              <td>
+                {{ exp.fechaVencimiento | date:'dd-MM-yyyy' }}
+              </td>
+
+              <td>
+
+                <span
+                  class="prioridad {{ exp.prioridad.toLowerCase() }}">
+
+                  {{ exp.prioridad }}
+                </span>
+              </td>
+              <td>
+                <span
+                  class="dias-restantes"
+                  [class.urgente]="
+                    obtenerDiasRestantes(exp.fechaVencimiento) <= 3
+                  ">
+                  {{ calcularDias(exp.fechaVencimiento) }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

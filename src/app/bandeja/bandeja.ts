@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Expediente } from '../../models/expediente';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'app-bandeja',
-  imports: [FormsModule, RouterLink, DatePipe],
+  imports: [FormsModule, RouterLink, DatePipe, NgClass],
   templateUrl: './bandeja.html',
   styleUrl: './bandeja.css',
 })
@@ -24,6 +24,7 @@ export class Bandeja implements OnInit{
     nombre: '',
     estado: '',
     fechaCreacion: '',
+    fechaVencimiento: '',
     prioridad: '',
     observaciones: [],
     historial: []
@@ -51,6 +52,7 @@ export class Bandeja implements OnInit{
       !this.nuevoExpediente.nombre ||
       !this.nuevoExpediente.estado ||
       !this.nuevoExpediente.fechaCreacion ||
+      !this.nuevoExpediente.fechaVencimiento ||
       !this.nuevoExpediente.prioridad
     ){
       alert('Debe completar todos los datos');
@@ -62,10 +64,22 @@ export class Bandeja implements OnInit{
       nombre: this.nuevoExpediente.nombre,
       estado: this.nuevoExpediente.estado,
       fechaCreacion: this.nuevoExpediente.fechaCreacion,
+      fechaVencimiento: this.nuevoExpediente.fechaVencimiento,
       prioridad: this.nuevoExpediente.prioridad,
       observaciones: this.nuevoExpediente.observaciones,
       historial: this.nuevoExpediente.historial
     };
+
+    const fechaCreacion = new Date(this.nuevoExpediente.fechaCreacion);
+
+    const fechaVencimiento = new Date(this.nuevoExpediente.fechaVencimiento);
+
+    if(fechaVencimiento < fechaCreacion){
+      alert(
+        'La fecha de vencimiento no puede ser anterior a la fecha de creación'
+      );
+      return;
+    }
 
     this.ExpedienteService.agregarExpediente(expediente);
     this.cargarExpedientes();
@@ -91,6 +105,7 @@ export class Bandeja implements OnInit{
       nombre: '',
       estado: '',
       fechaCreacion: '',
+      fechaVencimiento: '',
       prioridad: '',
       observaciones: [],
       historial: []
@@ -130,5 +145,9 @@ export class Bandeja implements OnInit{
   {
     this.filtroEstado = '';
     this.filtroPrioridad = '';
+  }
+  estadoVencimiento(fecha: string)
+  {
+    return this.ExpedienteService.getEstadoVencimiento(fecha);
   }
 }

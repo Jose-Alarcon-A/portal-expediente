@@ -24,7 +24,8 @@ export class ExpedienteService
       id: 1,
       nombre: 'Fiscalización',
       estado: 'Pendiente',
-      fechaCreacion: '02/05/2026',
+      fechaCreacion: '2026-05-02',
+      fechaVencimiento: '2026-06-30',
       prioridad: 'Alta',
       observaciones: ['Requiere atención urgente'],
       historial:[]
@@ -33,7 +34,8 @@ export class ExpedienteService
       id: 2,
       nombre: 'Revisión',
       estado: 'Pendiente',
-      fechaCreacion: '04/05/2026',
+      fechaCreacion: '2026-05-04',
+      fechaVencimiento: '2026-06-15',
       prioridad: 'Media',
       observaciones: ['Requiere revisión detallada'],
       historial:[]
@@ -42,7 +44,8 @@ export class ExpedienteService
       id: 3,
       nombre: 'Canon',
       estado: 'Pendiente',
-      fechaCreacion: '07/05/2026',
+      fechaCreacion: '2026-05-07',
+      fechaVencimiento: '2026-06-20',
       prioridad: 'Baja',
       observaciones: ['Requiere seguimiento periódico'],
       historial:[]
@@ -118,5 +121,68 @@ export class ExpedienteService
     expediente.historial.push(historial);
   }
 
+  estaVencido(fecha: string): boolean
+  {
+
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);          // ← importante: ignorar la hora
+    const vencimiento = new Date(fecha);
+
+    return vencimiento < hoy;
+
+  }
+  //Fecha Vencimiento//
+  estaProximoAVencer(fecha: string): boolean {
+    const hoy = new Date();
+    const vencimiento = new Date(fecha);
+
+    // Resta los milisegundos: cuánto falta desde ahora hasta el vencimiento
+    // Si vencimiento > hoy → positivo (falta tiempo)
+    // Si vencimiento < hoy → negativo (ya venció)
+    const diferenciaMs = vencimiento.getTime() - hoy.getTime();
+
+    // Convierte milisegundos a días
+    // 1000ms = 1s → x60 = 1min → x60 = 1hora → x24 = 1día
+    const dias = diferenciaMs / (1000 * 60 * 60 * 24);
+
+    // dias >= 0 → no ha vencido todavía
+    // dias <= 7 → vence dentro de 7 días
+    return dias >= 0 && dias <= 7;
+  }
+  getEstadoVencimiento(fecha: string): 'vencido' | 'proximo' | 'vigente'
+  {
+    const hoy = new Date();
+    const vencimiento = new Date(fecha);
+    const dias = (vencimiento.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (dias < 0)  return 'vencido';   // ya pasó
+    if (dias <= 7) return 'proximo';   // entre hoy y 7 días
+    return 'vigente';                  // más de 7 días
+  }
+
+  getProximosAVencer(): Expediente[] {
+    return this.obtenerExpedientes().filter(exp =>
+      this.estaProximoAVencer(exp.fechaVencimiento)
+    );
+  }
+
+  calcularDias(fecha: string): string {
+    const hoy = new Date();
+    const vence = new Date(fecha);
+    const dias = Math.ceil((vence.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (dias === 0) return '⚠️ Vence hoy';
+    if (dias === 1) return '⚠️ Vence mañana';
+    return `${dias} días`;
+  }
+  obtenerDiasRestantes(fecha: string): number {
+    const hoy = new Date();
+    const vence = new Date(fecha);
+
+    return Math.ceil(
+      (vence.getTime() - hoy.getTime())
+      / (1000 * 60 * 60 * 24)
+    );
+  }
 }
 
