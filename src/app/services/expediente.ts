@@ -161,9 +161,11 @@ export class ExpedienteService
   }
 
   getProximosAVencer(): Expediente[] {
-    return this.obtenerExpedientes().filter(exp =>
-      this.estaProximoAVencer(exp.fechaVencimiento)
-    );
+    return this.obtenerExpedientes().filter(exp => {
+      const dias = this.obtenerDiasRestantes(exp.fechaVencimiento);
+
+      return dias <= 7;
+    });
   }
 
   calcularDias(fecha: string): string {
@@ -173,6 +175,7 @@ export class ExpedienteService
 
     if (dias === 0) return '⚠️ Vence hoy';
     if (dias === 1) return '⚠️ Vence mañana';
+    if (dias < 0) return `🚨 Venció hace ${Math.abs(dias)} días`;
     return `${dias} días`;
   }
   obtenerDiasRestantes(fecha: string): number {

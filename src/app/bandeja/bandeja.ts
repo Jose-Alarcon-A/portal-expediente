@@ -5,16 +5,50 @@ import { Expediente } from '../../models/expediente';
 import { RouterLink } from '@angular/router';
 import { DatePipe, NgClass } from '@angular/common';
 
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-bandeja',
-  imports: [FormsModule, RouterLink, DatePipe, NgClass],
+  imports: [FormsModule,
+            RouterLink,
+            DatePipe,
+            NgClass,
+            MatCardModule,
+            MatFormFieldModule,
+            MatInputModule,
+            MatButtonModule,
+            MatSelectModule,
+            MatTableModule,
+            MatIconModule,
+            MatDatepickerModule,
+            MatNativeDateModule
+          ],
   templateUrl: './bandeja.html',
   styleUrl: './bandeja.css',
 })
 export class Bandeja implements OnInit{
   expedientes: Expediente[] = [];
   nuevaObservacion = '';
+
+  columnas: string[] =
+  [
+    'id',
+    'nombre',
+    'estado',
+    'fechaCreacion',
+    'fechaVencimiento',
+    'prioridad',
+    'observaciones',
+    'acciones'
+  ];
 
   filtroEstado = '';
   filtroPrioridad = '';
