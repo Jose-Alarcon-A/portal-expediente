@@ -1,0 +1,147 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f4f6fb;
+  padding: 20px;
+}
+
+.contenedor-kanban {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.kanban-titulo-card {
+  margin-bottom: 24px;
+}
+
+/* EL BOARD HORIZONTAL */
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+/* CADA COLUMNA */
+.kanban-columna {
+  min-width: 420px;
+  flex: 1;
+  background: #ffffff;
+  border-radius: 16px;
+}
+
+/* LISTA DE TARJETAS */
+.kanban-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 12px;
+}
+
+/* TARJETAS */
+.expediente-card {
+  border-radius: 14px;
+  transition: transform 0.2s ease;
+}
+
+.expediente-card:hover {
+  transform: translateY(-3px);
+}
+
+/* PRIORIDAD */
+.expediente-card.alta {
+  border-left: 6px solid #dc2626;
+}
+
+.expediente-card.media {
+  border-left: 6px solid #f59e0b;
+}
+
+.expediente-card.baja {
+  border-left: 6px solid #16a34a;
+}
+
+/* CAMPOS */
+.campo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  gap: 10px;
+}
+
+.campo strong {
+  color: #334155;
+  font-size: 14px;
+}
+
+.campo span {
+  color: #475569;
+  font-size: 14px;
+}
+
+/* PRIORIDAD CHIP */
+.prioridad-chip.alta {
+  background: #ffe5e5;
+  color: #c62828;
+}
+
+.prioridad-chip.media {
+  background: #fff4d6;
+  color: #8a6d00;
+}
+
+.prioridad-chip.baja {
+  background: #e3f7e6;
+  color: #2e7d32;
+}
+
+/* ESTADOS */
+.estado-chip.pendiente {
+  background: #fff4d6;
+  color: #8a6d00;
+}
+
+.estado-chip.en-proceso {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.estado-chip.finalizado {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* COLUMNA VACÍA */
+.columna-vacia {
+  text-align: center;
+  background: #f8fafc;
+  color: #94a3b8;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .kanban-columna {
+    min-width: 350px;
+  }
+}
+
+@media (max-width: 900px) {
+  .kanban-board {
+    flex-direction: column;
+  }
+
+  .kanban-columna {
+    width: 100%;
+    min-width: unset;
+  }
+}
+.acciones-kanban {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}

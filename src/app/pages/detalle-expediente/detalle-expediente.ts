@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Expediente } from '../../../models/expediente';
 import { ExpedienteService } from '../../services/expediente';
 import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-detalle-expediente',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   templateUrl: './detalle-expediente.html',
   styleUrl: './detalle-expediente.css',
 })

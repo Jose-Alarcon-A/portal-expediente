@@ -7,6 +7,7 @@ import { DetalleExpediente } from './pages/detalle-expediente/detalle-expediente
 import { EditarExpediente } from './pages/editar-expediente/editar-expediente';
 import { EstadoExpedientes } from './pages/estado-expedientes/estado-expedientes';
 import { ProximosVencer } from './pages/proximos-vencer/proximos-vencer';
+import { Kanban } from './pages/kanban/kanban';
 
 
 export const routes: Routes = [
@@ -17,6 +18,10 @@ export const routes: Routes = [
   {
     path: 'bandeja',
     component: Bandeja
+  },
+  {
+    path: 'kanban',
+    component: Kanban
   },
   {
     path: 'reportes',

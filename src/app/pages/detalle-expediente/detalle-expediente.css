@@ -144,3 +144,10 @@
   font-size: 14px;
   font-weight: 500;
 }
+.acciones-detalle {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

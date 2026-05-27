@@ -187,5 +187,64 @@ export class ExpedienteService
       / (1000 * 60 * 60 * 24)
     );
   }
+  cambiarEstado(expediente: Expediente): void {
+    if(expediente.estado === 'Pendiente') {
+      expediente.estado = 'En proceso';
+    } else if(expediente.estado === 'En proceso') {
+      expediente.estado = 'Finalizado';
+    }
+
+    this.agregarHistorial(
+      expediente,
+      `El expediente "${expediente.nombre}" cambió al estado "${expediente.estado}" el ${new Date().toLocaleString()}`
+    );
+
+    this.actualizarExpediente(expediente);
+  }
+
+  avanzarEstado(expediente: Expediente): void
+  {
+    const estadoAnterior = expediente.estado;
+
+    if(expediente.estado === 'Pendiente'){
+      expediente.estado = 'En proceso';
+    }
+    else if(expediente.estado === 'En proceso'){
+      expediente.estado = 'Finalizado';
+    }
+    else if(expediente.estado === 'Finalizado'){
+      expediente.estado = 'Pendiente';
+    }
+
+    this.agregarHistorial(
+      expediente,
+      `El expediente "${expediente.nombre}" cambió de "${estadoAnterior}" a "${expediente.estado}" el ${new Date().toLocaleString()}`
+    );
+
+    this.actualizarExpediente(expediente);
+  }
+
+  retrocederEstado(expediente: Expediente): void
+  {
+    const estadoAnterior = expediente.estado;
+
+    if(expediente.estado === 'Finalizado'){
+      expediente.estado = 'En proceso';
+    }
+    else if(expediente.estado === 'En proceso'){
+      expediente.estado = 'Pendiente';
+    }
+    else if(expediente.estado === 'Pendiente'){
+      return;
+    }
+
+    this.agregarHistorial(
+      expediente,
+      `El expediente "${expediente.nombre}" volvió de "${estadoAnterior}" a "${expediente.estado}" el ${new Date().toLocaleString()}`
+    );
+
+    this.actualizarExpediente(expediente);
+  }
+
 }
 

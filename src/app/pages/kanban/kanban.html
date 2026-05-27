@@ -1,0 +1,158 @@
+<div class="contenedor-kanban">
+
+  <mat-card class="kanban-titulo-card">
+    <mat-card-header>
+      <mat-card-title>
+        🗂️ Kanban de Expedientes
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Flujo visual de expedientes
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+
+  <div class="kanban-board">
+
+    @for(estado of estados; track estado) {
+
+      <mat-card class="kanban-columna">
+
+        <mat-card-header>
+          <mat-card-title>
+            {{ estado }}
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            {{ obtenerExpedientesPorEstado(estado).length }} expedientes
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="kanban-lista">
+
+          @for(expediente of obtenerExpedientesPorEstado(estado); track expediente.id) {
+
+            <mat-card
+              class="expediente-card"
+              [ngClass]="expediente.prioridad.toLowerCase()">
+
+              <mat-card-content>
+
+                <div class="campo">
+                  <strong>📁 Nombre:</strong>
+                  <span>{{ expediente.nombre }}</span>
+                </div>
+
+                <div class="campo">
+                  <strong>📌 Estado:</strong>
+
+                  <mat-chip
+                    class="estado-chip"
+                    [ngClass]="expediente.estado.toLowerCase().replace(' ', '-')">
+
+                    {{ expediente.estado }}
+
+                  </mat-chip>
+                </div>
+
+                <div class="campo">
+                  <strong>📅 Fecha:</strong>
+                  <span>
+                    {{ expediente.fechaCreacion | date:'dd-MM-yyyy' }}
+                  </span>
+                </div>
+
+                <div class="campo">
+                  <strong>⏰ Vencimiento:</strong>
+                  <span>
+                    {{ expediente.fechaVencimiento | date:'dd-MM-yyyy' }}
+                  </span>
+                </div>
+
+                <div class="campo">
+                  <strong>🚨 Prioridad:</strong>
+
+                  <mat-chip
+                    class="prioridad-chip"
+                    [ngClass]="expediente.prioridad.toLowerCase()">
+
+                    {{ expediente.prioridad }}
+
+                  </mat-chip>
+                </div>
+
+              </mat-card-content>
+
+              <mat-card-actions class="acciones-kanban">
+
+                <button mat-stroked-button color="primary" [routerLink]="['/expedientes', expediente.id]">
+                  🔍 Ver detalle
+                </button>
+
+                @if(expediente.estado !== 'Pendiente') {
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    (click)="retrocederEstado(expediente)">
+
+                    ← Volver
+
+                  </button>
+                }
+
+                @if(expediente.estado === 'Pendiente') {
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="avanzarEstado(expediente)">
+
+                    ▶ Iniciar
+
+                  </button>
+                }
+
+                @if(expediente.estado === 'En proceso') {
+                  <button
+                    mat-raised-button
+                    color="accent"
+                    (click)="avanzarEstado(expediente)">
+
+                    ✅ Finalizar
+
+                  </button>
+                }
+
+                @if(expediente.estado === 'Finalizado') {
+                  <button
+                    mat-raised-button
+                    color="warn"
+                    (click)="avanzarEstado(expediente)">
+
+                    🔄 Reabrir
+
+                  </button>
+                }
+
+              </mat-card-actions>
+
+            </mat-card>
+
+          } @empty {
+
+            <mat-card class="columna-vacia">
+              <mat-card-content>
+                Sin expedientes
+              </mat-card-content>
+            </mat-card>
+
+          }
+
+        </mat-card-content>
+
+      </mat-card>
+
+    }
+
+  </div>
+
+</div>

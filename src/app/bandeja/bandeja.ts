@@ -156,10 +156,10 @@ export class Bandeja implements OnInit{
 
       expediente.estado = 'Finalizado';
 
-    }/*else{
+    }else{
 
       expediente.estado = 'Pendiente';
-    }*/
+    }
 
     this.ExpedienteService.agregarHistorial(expediente, `El expediente "${expediente.nombre}" cambió al estado "${expediente.estado}" el ${new Date().toLocaleString()}`);
 
