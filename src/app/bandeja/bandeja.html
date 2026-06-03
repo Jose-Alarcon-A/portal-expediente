@@ -129,7 +129,7 @@
     </mat-card-content>
   </mat-card>
 
-  @if(expedientes.length === 0) {
+  @if(dataSource.data.length === 0) {
     <mat-card class="mensaje-vacio">📂 No hay expedientes registrados.</mat-card>
   } @else if(obtenerExpedientesFiltrados().length === 0) {
     <mat-card class="mensaje-vacio">🔍 No existen expedientes que coincidan con los filtros aplicados.</mat-card>

@@ -28,10 +28,11 @@ export class DetalleExpediente implements OnInit {
       this.route.snapshot.paramMap.get('id')
     );
 
-    this.expediente =
-      this.expedienteService.obtenerExpedientePorId(
-        this.idExpediente
-      );
+    this.expedienteService.obtenerExpedientePorId(
+      this.idExpediente
+    ).subscribe(exp => {
+      this.expediente = exp;
+    });
   }
 
   obtenerClasePrioridad(prioridad: string){

@@ -1,0 +1,62 @@
+{
+  "expedientes": [
+    {
+      "id": "1",
+      "nombre": "Fiscalización",
+      "estado": "Finalizado",
+      "fechaCreacion": "2026-05-02",
+      "fechaVencimiento": "2026-06-30",
+      "prioridad": "Alta",
+      "observaciones": [
+        "Requiere atención urgente"
+      ],
+      "historial": [
+        "El expediente \"Fiscalización\" cambió al estado \"Pendiente\" el 3/6/2026, 8:03:46",
+        "El expediente \"Fiscalización\" cambió al estado \"Pendiente\" el 3/6/2026, 8:03:50",
+        "El expediente \"Fiscalización\" cambió de \"En proceso\" a \"Finalizado\" el 3/6/2026, 8:04:14"
+      ]
+    },
+    {
+      "id": "2",
+      "nombre": "Revisión",
+      "estado": "En proceso",
+      "fechaCreacion": "2026-05-04",
+      "fechaVencimiento": "2026-06-15",
+      "prioridad": "Media",
+      "observaciones": [
+        "Requiere revisión detallada"
+      ],
+      "historial": [
+        "El expediente \"Revisión\" cambió de \"Pendiente\" a \"En proceso\" el 3/6/2026, 8:04:09"
+      ]
+    },
+    {
+      "id": "3",
+      "nombre": "Canon",
+      "estado": "Pendiente",
+      "fechaCreacion": "2026-05-07",
+      "fechaVencimiento": "2026-06-20",
+      "prioridad": "Baja",
+      "observaciones": [
+        "Requiere seguimiento periódico"
+      ],
+      "historial": [
+        "El expediente \"Canon\" cambió de \"Pendiente\" a \"En proceso\" el 3/6/2026, 8:04:03",
+        "El expediente \"Canon\" volvió de \"En proceso\" a \"Pendiente\" el 3/6/2026, 8:04:07"
+      ]
+    },
+    {
+      "id": "Ebt870_PzqQ",
+      "nombre": "tset",
+      "estado": "Pendiente",
+      "fechaCreacion": "2026-06-03T04:00:00.000Z",
+      "fechaVencimiento": "2026-06-04T04:00:00.000Z",
+      "prioridad": "alta",
+      "observaciones": [
+        "set"
+      ],
+      "historial": []
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

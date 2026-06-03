@@ -17,7 +17,9 @@ export class ProximosVencer implements OnInit {
   constructor(private expedienteService: ExpedienteService) {}
 
   ngOnInit() {
-    this.expedientes = this.expedienteService.getProximosAVencer();
+    this.expedienteService.getProximosAVencer().subscribe(data => {
+      this.expedientes = data;
+    });
   }
 
   estadoVencimiento(fecha: string) {

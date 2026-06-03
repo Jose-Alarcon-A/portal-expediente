@@ -35,7 +35,9 @@ export class Kanban implements OnInit {
   }
 
   cargarExpedientes(): void {
-    this.expedientes = this.expedienteService.obtenerExpedientes();
+    this.expedienteService.obtenerExpedientes().subscribe(data => {
+      this.expedientes = data;
+    });
   }
 
   obtenerExpedientesPorEstado(estado: string): Expediente[] {
@@ -43,11 +45,14 @@ export class Kanban implements OnInit {
   }
 
   avanzarEstado(expediente: Expediente): void {
-    this.expedienteService.avanzarEstado(expediente);
-    this.cargarExpedientes();
+    this.expedienteService.avanzarEstado(expediente).subscribe(() => {
+      this.cargarExpedientes();
+    });
   }
   retrocederEstado(expediente: Expediente): void {
-    this.expedienteService.retrocederEstado(expediente);
-    this.cargarExpedientes();
+    const obs = this.expedienteService.retrocederEstado(expediente);
+    if(obs) {
+      obs.subscribe(() => this.cargarExpedientes());
+    }
   }
 }

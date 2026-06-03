@@ -17,10 +17,10 @@ export class Reportes implements OnInit {
   constructor(private expedienteService: ExpedienteService) {}
 
   ngOnInit(): void {
-    this.totalExpedientes = this.expedienteService.contarTotal();
-    this.totalPendientes = this.expedienteService.contarPendientes();
-    this.totalEnProceso = this.expedienteService.contarEnProceso();
-    this.totalFinalizados = this.expedienteService.contarFinalizados();
+    this.expedienteService.contarTotal().subscribe(n => this.totalExpedientes = n);
+    this.expedienteService.contarPendientes().subscribe(n => this.totalPendientes = n);
+    this.expedienteService.contarEnProceso().subscribe(n => this.totalEnProceso = n);
+    this.expedienteService.contarFinalizados().subscribe(n => this.totalFinalizados = n);
 
   }
 

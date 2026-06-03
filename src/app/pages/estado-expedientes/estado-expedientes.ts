@@ -34,10 +34,11 @@ export class EstadoExpedientes implements OnInit {
       else if(estadoUrl === 'finalizado'){
         this.estado = 'Finalizado';
       }
-      this.expedientes = this.expedienteService.obtenerExpedientesPorEstado
-      (
+      this.expedienteService.obtenerExpedientesPorEstado(
         this.estado
-      );
+      ).subscribe(data => {
+        this.expedientes = data;
+      });
     });
   }
 }

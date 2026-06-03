@@ -26,22 +26,20 @@ export class EditarExpediente implements OnInit {
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    const expedienteEncontrado = this.expedienteService.obtenerExpedientePorId(id);
-
-    if(expedienteEncontrado)
-    {
-     if(!Array.isArray(expedienteEncontrado.observaciones)){
-        expedienteEncontrado.observaciones = [];
+    this.expedienteService.obtenerExpedientePorId(id).subscribe(exp => {
+      if(exp)
+      {
+       if(!Array.isArray(exp.observaciones)){
+          exp.observaciones = [];
+        }
+        this.expediente = exp;
+        this.estadoOriginal = exp.estado;
       }
-      this.expediente = expedienteEncontrado;
-      this.estadoOriginal = expedienteEncontrado.estado;
-    }
-    else
-    {
-      //this.mensajeError = 'Expediente no encontrado';
-      alert('Expediente no encontrado');
-      //this.router.navigate(['/bandeja']);
-    }
+      else
+      {
+        alert('Expediente no encontrado');
+      }
+    });
   }
 
   guardarCambios()
@@ -75,8 +73,9 @@ export class EditarExpediente implements OnInit {
     {
       this.expedienteService.actualizarExpediente(
         this.expediente
-      );
-      this.router.navigate(['/bandeja']);
+      ).subscribe(() => {
+        this.router.navigate(['/bandeja']);
+      });
     }
   }
   agregarObservacion()

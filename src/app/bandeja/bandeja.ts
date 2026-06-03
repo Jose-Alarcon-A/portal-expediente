@@ -14,6 +14,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-bandeja',
@@ -35,7 +36,7 @@ import { MatNativeDateModule } from '@angular/material/core';
   styleUrl: './bandeja.css',
 })
 export class Bandeja implements OnInit{
-  expedientes: Expediente[] = [];
+  dataSource = new MatTableDataSource<Expediente>();
   nuevaObservacion = '';
 
   columnas: string[] =
@@ -72,11 +73,13 @@ export class Bandeja implements OnInit{
 
   cargarExpedientes()
   {
-    this.expedientes = this.ExpedienteService.obtenerExpedientes();
-    this.expedientes.forEach(expediente => {
-      if(!Array.isArray(expediente.observaciones)){
-        expediente.observaciones = [];
-      }
+    this.ExpedienteService.obtenerExpedientes().subscribe(data => {
+      this.dataSource.data = data;
+      this.dataSource.data.forEach(expediente => {
+        if(!Array.isArray(expediente.observaciones)){
+          expediente.observaciones = [];
+        }
+      });
     });
   }
 
@@ -115,10 +118,13 @@ export class Bandeja implements OnInit{
       return;
     }
 
-    this.ExpedienteService.agregarExpediente(expediente);
-    this.cargarExpedientes();
-
-    this.limpiarFormulario();
+    this.ExpedienteService.agregarExpediente(expediente).subscribe({
+      next: (expedienteCreado) => {
+        this.dataSource.data = [...this.dataSource.data, expedienteCreado];
+        this.cargarExpedientes();
+        this.limpiarFormulario();
+      }
+    });
   }
 
   agregarObservacion()
@@ -129,8 +135,18 @@ export class Bandeja implements OnInit{
 
   eliminarExpediente(id: number)
   {
-    this.ExpedienteService.eliminarExpediente(id);
-    this.cargarExpedientes();
+    if(!confirm('¿Está seguro de eliminar este expediente?')){
+      return;
+    }
+    this.ExpedienteService.eliminarExpediente(id).subscribe({
+      next: () => {
+        this.dataSource.data = this.dataSource.data.filter(exp => exp.id !== id);
+      },
+      error: (err) => {
+        alert('Error al eliminar el expediente');
+        console.error(err);
+      }
+    });
   }
 
   limpiarFormulario(){
@@ -148,28 +164,13 @@ export class Bandeja implements OnInit{
 
   cambiarEstado(expediente: Expediente)
   {
-    if(expediente.estado === 'Pendiente'){
-
-      expediente.estado = 'En proceso';
-
-    }else if(expediente.estado === 'En proceso'){
-
-      expediente.estado = 'Finalizado';
-
-    }else{
-
-      expediente.estado = 'Pendiente';
-    }
-
-    this.ExpedienteService.agregarHistorial(expediente, `El expediente "${expediente.nombre}" cambió al estado "${expediente.estado}" el ${new Date().toLocaleString()}`);
-
-    this.ExpedienteService.guardarExpedientes(this.expedientes);
-    this.cargarExpedientes();
-
+    this.ExpedienteService.avanzarEstado(expediente).subscribe(() => {
+      this.cargarExpedientes();
+    });
   }
   obtenerExpedientesFiltrados()
   {
-    return this.expedientes.filter(expediente => {
+    return this.dataSource.data.filter(expediente => {
       const cumpleEstado = !this.filtroEstado || expediente.estado === this.filtroEstado;
       const cumplePrioridad = !this.filtroPrioridad || expediente.prioridad === this.filtroPrioridad;
       return cumpleEstado && cumplePrioridad;
